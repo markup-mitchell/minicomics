@@ -2,6 +2,28 @@ const fs = require('fs-extra');
 const config = require('./config');
 const pageHtml = require('./page-html-function');
 const addHomepage = require('./homepage');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: 'spitchell',
+  api_key: '558763648963822',
+  api_secret: 'wO2rPjl0i9YQ82cGgf9ul-eMZjs'
+});
+
+async function list() {
+  let images = await cloudinary.api.resources(
+    {
+      type: 'upload',
+      prefix: 'home learning/'
+    },
+    function (error, result) {
+      console.log(error);
+    }
+  );
+  console.log(images);
+}
+
+list();
 
 if (!fs.existsSync(config.dev.outDir)) fs.mkdirSync(config.dev.outDir);
 
