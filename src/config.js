@@ -1,7 +1,8 @@
 const config = {
   dev: {
     editionsDir: 'src/content',
-    outdir: './public',
+    outDir: './public',
+    path: 'https://res.cloudinary.com/dthkwbvgt',
   },
 };
 
