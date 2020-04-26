@@ -1,3 +1,5 @@
+const config = require('./config');
+
 const pageHtml = (issue) => {
   return `
      <!DOCTYPE html>
