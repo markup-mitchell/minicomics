@@ -1,12 +1,7 @@
-const data = {
-  zineName: 'test zine',
-  frames: ['path1', 'path2', 'path3'],
-};
-
 const pageHtml = (data) => {
   let images = data.frames
     .map((frame) => `<img src="./content/${frame}" loading="lazy" alt="">`)
-    .join('');
+    .join('\n');
 
   return `
    <!DOCTYPE html>

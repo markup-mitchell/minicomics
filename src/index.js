@@ -6,9 +6,11 @@ if (!fs.existsSync(config.dev.outDir)) fs.mkdirSync(config.dev.outDir);
 
 const editions = fs.readdirSync(config.dev.editionsDir);
 
-console.log(
-  pageHtml({
-    zineName: 'test zine',
-    frames: ['path1', 'path2', 'path3'],
-  }),
-);
+const createPage = (name) => {
+  let pageData = {};
+  pageData.zineName = name;
+  pageData.frames = fs.readdirSync(`${config.dev.editionsDir}/${name}`);
+  return pageData;
+};
+
+console.log(pageHtml(createPage('home learning')));
