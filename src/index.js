@@ -10,36 +10,27 @@ cloudinary.config({
   api_secret: 'wO2rPjl0i9YQ82cGgf9ul-eMZjs'
 });
 
-async function list() {
-  let images = await cloudinary.api.resources(
+async function getPages(title) {
+  let imageData = await cloudinary.api.resources(
     {
       type: 'upload',
-      prefix: 'home learning/'
+      prefix: title
     },
     function (error, result) {
       console.log(error);
     }
   );
-  console.log(images);
+  let folders = new Set(
+    imageData.resources.map((imageObj) => imageObj.public_id.split('/')[1])
+  );
+  // this approach extracts unique folder names in the paths of *returned results*, so empty folders are ignored
+  console.log(Array.from(folders));
+  return Array.from(folders);
 }
 
-list();
+const comics = getPages('minicomics');
 
 if (!fs.existsSync(config.dev.outDir)) fs.mkdirSync(config.dev.outDir);
-
-const createComic = (title) => {
-  let issue = {};
-  issue.path = `${config.dev.outDir}/${title}`;
-  issue.title = title;
-  issue.frames = fs.readdirSync(`${config.dev.pageDir}/${title}`);
-
-  return issue;
-};
-
-const comicsData = fs
-  .readdirSync(config.dev.pageDir)
-  .map((directoryName) => createComic(directoryName));
-// this should be an array of objects with the following properties: title, path,
 
 const createIssuePages = (comicsData) => {
   comicsData.forEach((issue) => {
@@ -54,11 +45,34 @@ const createIssuePages = (comicsData) => {
   });
 };
 
-// copy assets
-if (!fs.existsSync(`${config.dev.outDir}/assets`)) {
-  fs.mkdirSync(`${config.dev.outDir}/assets`);
-}
-fs.copySync('src/assets', `${config.dev.outDir}/assets`);
+const createComic = async (title) => {
+  let issue = {};
+  issue.path = `${config.dev.imageRepo}/${title}`;
+  issue.title = title;
+  //   issue.frames = fs.readdirSync(`${config.dev.pageDir}/${title}`);
+  issue.frames = await cloudinary.api.resources(
+    {
+      type: 'upload',
+      prefix: title
+    },
+    function (error, result) {
+      console.log(error);
+    }
+  );
+  const comicsData = comics.map((title) => createComic(title));
+  createIssuePages(comicsData);
+  addHomepage(comicsData);
 
-createIssuePages(comicsData);
-addHomepage(comicsData);
+  return issue;
+};
+
+// const comicsData = fs
+//   .readdirSync(config.dev.pageDir)
+//   .map((directoryName) => createComic(directoryName));
+// this should be an array of objects with the following properties: title, path,
+
+// copy assets
+// if (!fs.existsSync(`${config.dev.outDir}/assets`)) {
+//   fs.mkdirSync(`${config.dev.outDir}/assets`);
+// }
+// fs.copySync('src/assets', `${config.dev.outDir}/assets`);

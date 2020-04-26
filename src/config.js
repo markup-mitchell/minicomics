@@ -5,7 +5,7 @@ const config = {
     src: 'src/',
     pageDir: 'src/assets/comics',
     outDir: './public',
-    path: 'https://res.cloudinary.com/dthkwbvgt'
+    imageRepo: 'https://res.cloudinary.com/spitchell/upload/minicomics'
   }
 };
 
