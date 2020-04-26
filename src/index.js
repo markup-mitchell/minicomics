@@ -36,6 +36,7 @@ const createIssuePages = (comicsData) => {
 if (!fs.existsSync(`${config.dev.outDir}/assets`)) {
   fs.mkdirSync(`${config.dev.outDir}/assets`);
 }
-fs.copySync(config.dev.pageDir, `${config.dev.outDir}/assets`);
+fs.copySync('src/assets', `${config.dev.outDir}/assets`);
+
 createIssuePages(comicsData);
 addHomepage(comicsData);

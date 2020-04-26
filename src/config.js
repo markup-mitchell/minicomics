@@ -2,10 +2,11 @@ const config = {
   siteName: 'mitchcraft',
   authorName: 'Mark Mitchell',
   dev: {
-    pageDir: 'src/comics',
+    src: 'src/',
+    pageDir: 'src/assets/comics',
     outDir: './public',
-    path: 'https://res.cloudinary.com/dthkwbvgt',
-  },
+    path: 'https://res.cloudinary.com/dthkwbvgt'
+  }
 };
 
 module.exports = config;
