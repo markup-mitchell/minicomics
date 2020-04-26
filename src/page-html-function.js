@@ -13,7 +13,7 @@ const pageHtml = (issue) => {
          ${issue.frames
            .map(
              (frame) =>
-               `<img src="/public/assets/comics/${issue.title}/${frame}" loading="lazy" alt="">`
+               `<img src="${config.dev.outDir}/${issue.title}/${frame}" loading="lazy" alt="">`
            )
            .join('')}
         </main>
