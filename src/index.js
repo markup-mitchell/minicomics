@@ -1,35 +1,41 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const config = require('./config');
 const pageHtml = require('./page-html-function');
+const addHomepage = require('./homepage');
 
 if (!fs.existsSync(config.dev.outDir)) fs.mkdirSync(config.dev.outDir);
 
-const editions = fs.readdirSync(config.dev.editionsDir);
+const createComic = (title) => {
+  let issue = {};
+  issue.path = `${config.dev.outDir}/${title}`;
+  issue.title = title;
+  issue.frames = fs.readdirSync(`${config.dev.pageDir}/${title}`);
 
-const createPageData = (name) => {
-  let pageData = {};
-  pageData.zineName = name;
-  pageData.frames = fs.readdirSync(`${config.dev.editionsDir}/${name}`);
-  return pageData;
+  return issue;
 };
 
-const createAllPages = (editions) => {
-  editions.forEach((edition) => {
-    let editionPath = `${config.dev.outDir}/${edition}`;
-    if (!fs.existsSync(editionPath)) {
-      fs.mkdirSync(editionPath);
+const comicsData = fs
+  .readdirSync(config.dev.pageDir)
+  .map((directoryName) => createComic(directoryName));
+// this should be an array of objects with the following properties: title, path,
+
+const createIssuePages = (comicsData) => {
+  comicsData.forEach((issue) => {
+    if (!fs.existsSync(issue.path)) {
+      fs.mkdirSync(issue.path);
     }
-    fs.writeFile(
-      `${editionPath}/index.html`,
-      pageHtml(createPageData(edition)),
-      (e) => {
-        if (e) throw e;
-        console.log(`${editionPath}/index.html was created successfully`);
-      },
-    );
-    console.log(editionPath);
+
+    fs.writeFile(`${issue.path}/index.html`, pageHtml(issue), (e) => {
+      if (e) throw e;
+      console.log(`${issue.path}/index.html was created successfully`);
+    });
   });
 };
 
-logstuff = (string) => string;
-createAllPages(editions);
+// copy assets
+if (!fs.existsSync(`${config.dev.outDir}/assets`)) {
+  fs.mkdirSync(`${config.dev.outDir}/assets`);
+}
+fs.copySync(config.dev.pageDir, `${config.dev.outDir}/assets`);
+createIssuePages(comicsData);
+addHomepage(comicsData);

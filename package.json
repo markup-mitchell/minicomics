@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/spitchell/discharge/issues"
   },
-  "homepage": "https://github.com/spitchell/discharge#readme"
+  "homepage": "https://github.com/spitchell/discharge#readme",
+  "devDependencies": {
+    "fs-extra": "^9.0.0"
+  }
 }

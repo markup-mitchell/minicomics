@@ -1,6 +1,8 @@
 const config = {
+  siteName: 'mitchcraft',
+  authorName: 'Mark Mitchell',
   dev: {
-    editionsDir: 'src/content',
+    pageDir: 'src/comics',
     outDir: './public',
     path: 'https://res.cloudinary.com/dthkwbvgt',
   },
