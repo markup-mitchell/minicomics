@@ -17,6 +17,18 @@ img {
   max-width: 100%;
 }
 
+.thumbnail {
+  margin: 4px;
+}
+
+.gallery {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.gallery__item {
+}
 /* .frame {
   display: flex;
   height: 100vh;

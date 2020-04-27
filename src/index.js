@@ -22,7 +22,6 @@ getAllPageImages = (folder) => {
       console.log(error);
     }
   );
-  // console.log(imageData);
   return imageData;
 };
 
@@ -34,7 +33,8 @@ const getIssue = (title, allImageData) => {
   const pagesData = [];
   allImageData.forEach((imageData) => {
     if (imageData.public_id.split('/')[1] === title) {
-      pagesData.push(imageData.url);
+      const transformUrl = imageData.url.replace('upload/', 'upload/w_425/');
+      pagesData.push(transformUrl);
     }
   });
   return { title: title, pages: pagesData };
@@ -52,8 +52,6 @@ const createComic = (issue) => {
   });
 };
 
-// const getIssueFolder = () =>
-
 const publishAll = async (folder) => {
   const allImageData = await getAllPageImages(folder); // {resources: [{}]}
   // console.log(allImageData);
@@ -61,11 +59,11 @@ const publishAll = async (folder) => {
     allImageData.resources.map((imageObj) => imageObj.public_id.split('/')[1])
   ); // get subfolder from url - FRAGILE! relies on cloudinary structure
   const titles = Array.from(uniqueFolderPaths);
-  console.log(titles);
   const issues = titles.map((title) => getIssue(title, allImageData.resources));
   console.log(issues);
+  issues.forEach((issue) => createComic(issue));
   addHomepage(issues);
+  fs.copy(`${config.dev.static}`, `${config.dev.outDir}`);
 };
 
-// publishAll('minicomics');
 publishAll('minicomics');

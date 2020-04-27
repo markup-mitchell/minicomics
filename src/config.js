@@ -2,8 +2,7 @@ const config = {
   siteName: 'mitchcraft',
   authorName: 'Mark Mitchell',
   dev: {
-    src: 'src/',
-    pageDir: 'src/assets/comics',
+    static: 'src/static',
     outDir: './public',
     imageRepo: 'https://res.cloudinary.com/spitchell/upload/minicomics'
   }

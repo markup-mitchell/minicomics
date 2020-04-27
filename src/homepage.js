@@ -11,6 +11,7 @@ const homepage = (pages) => `
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="${config.description}" />
         <title>${config.siteName}</title>
+        <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
         <main>
@@ -20,11 +21,11 @@ const homepage = (pages) => `
                 <p>by ${config.authorName}</p>
             </header>
 
-            <ul>
+            <ul class="gallery">
                 ${pages
                   .map(
-                    (page) => `<li>
-                    <a href="./${page.title}">${page.title}</a>
+                    (page) => `<li class="gallery__item">
+                    <a href="./${page.title}"><img class="thumbnail" src="${page.pages[0]}" alt=""/></a>
                     </li>`
                   )
                   .join('')}
