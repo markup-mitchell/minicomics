@@ -1,4 +1,4 @@
-const fs = require('fs-extra');
+const fs = require('fs-extra'); // for easy dir cp
 const config = require('./config');
 const pageHtml = require('./page-html-function');
 const addHomepage = require('./homepage');
@@ -10,7 +10,7 @@ cloudinary.config({
   api_secret: 'wO2rPjl0i9YQ82cGgf9ul-eMZjs'
 });
 
-async function getPages(title) {
+getTitles = async (title) => {
   let imageData = await cloudinary.api.resources(
     {
       type: 'upload',
@@ -20,17 +20,41 @@ async function getPages(title) {
       console.log(error);
     }
   );
-  let folders = new Set(
+  const folders = new Set(
     imageData.resources.map((imageObj) => imageObj.public_id.split('/')[1])
   );
   // this approach extracts unique folder names in the paths of *returned results*, so empty folders are ignored
-  console.log(Array.from(folders));
-  return Array.from(folders);
-}
+  //   console.log(imageData);
+  const titles = Array.from(folders);
+  return titles;
+};
 
-const comics = getPages('minicomics');
+// make public directory
 
 if (!fs.existsSync(config.dev.outDir)) fs.mkdirSync(config.dev.outDir);
+
+const getIssue = async (title) => {
+  let allPages = await cloudinary.api.resources(
+    {
+      type: 'upload',
+      prefix: `minicomics/${title}`
+    },
+    function (error, result) {
+      console.log(error);
+    }
+  );
+  //   console.log(allPages);
+  const pageData = allPages.resources.map((page) => {
+    return {
+      title: title,
+      url: page.url
+    };
+  });
+  console.log(pageData);
+};
+
+getTitles('minicomics');
+getIssue('home learning');
 
 const createIssuePages = (comicsData) => {
   comicsData.forEach((issue) => {
