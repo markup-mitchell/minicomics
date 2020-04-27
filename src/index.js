@@ -10,23 +10,26 @@ cloudinary.config({
   api_secret: 'wO2rPjl0i9YQ82cGgf9ul-eMZjs'
 });
 
-getTitles = async (title) => {
-  let imageData = await cloudinary.api.resources(
+getTitles = async (folder) => {
+  const imageData = await cloudinary.api.resources(
+    // fetch from  cloudinary
     {
       type: 'upload',
-      prefix: title
+      prefix: folder // the name of the cloudinary folder
     },
     function (error, result) {
       console.log(error);
     }
   );
-  const folders = new Set(
-    imageData.resources.map((imageObj) => imageObj.public_id.split('/')[1])
+  // extract the names of subdirectories
+  const titles = new Set(
+    imageData.resources.map((imageObj) => imageObj.public_id.split('/')[1]) // FRAGILE! relies on a particular srtructure in cloudinary
   );
   // this approach extracts unique folder names in the paths of *returned results*, so empty folders are ignored
-  //   console.log(imageData);
-  const titles = Array.from(folders);
-  return titles;
+  // console.log(Array.from(titles));
+  console.log(imageData);
+
+  return Array.from(titles);
 };
 
 // make public directory
@@ -34,7 +37,7 @@ getTitles = async (title) => {
 if (!fs.existsSync(config.dev.outDir)) fs.mkdirSync(config.dev.outDir);
 
 const getIssue = async (title) => {
-  let allPages = await cloudinary.api.resources(
+  let pages = await cloudinary.api.resources(
     {
       type: 'upload',
       prefix: `minicomics/${title}`
@@ -43,39 +46,47 @@ const getIssue = async (title) => {
       console.log(error);
     }
   );
-  const imageUrls = allPages.resources.map((page) => page.url);
+  const imageUrls = await pages.resources.map((page) => page.url);
   return { title: title, pages: imageUrls };
   //   typing of return object?
 };
 
-getTitles('minicomics');
-getIssue('home learning');
-
-const createComic = (pageData) => {
-  // pageData is { title: string, url: [8 url as string] }
-  const issuePath = `${config.dev.outDir}/${pageData.title}`;
+const createComic = (issue) => {
+  // issue is { title: string, url: [8 url as string] }
+  const issuePath = `${config.dev.outDir}/${issue.title}`;
   if (!fs.existsSync(issuePath)) {
     fs.mkdirSync(issuePath);
   }
-  fs.writeFile(`${issuePath}/index.html`, pageHtml(pageData), (e) => {
+  fs.writeFile(`${issuePath}/index.html`, pageHtml(issue), (e) => {
     if (e) throw e;
     console.log(`${issuePath}/index.html was created successfully`);
   });
 };
 
-createComic({
-  title: 'home learning',
-  pages: [
-    'http://res.cloudinary.com/spitchell/image/upload/v1587931282/minicomics/home%20learning/0-cover_lpppjg.jpg',
-    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/1-literacy_jjyrkf.jpg',
-    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/2-aeronautics_affsfr.jpg',
-    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/3-encryption_gor7aa.jpg',
-    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/4-art-and-design_eh8xym.jpg',
-    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/5-maths-1_uqnqes.jpg',
-    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/6-maths-2_gosi7v.jpg',
-    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/7-10000ad_umrqjs.jpg'
-  ]
-});
+const publishAll = async (folder) => {
+  const titles = await getTitles(folder);
+  const issues = await titles.map((title) => {
+    return getIssue(title);
+  });
+  console.log(JSON.stringify(issues));
+  // issues.forEach((issue) => createComic(issue));
+};
+
+// publishAll('minicomics');
+getTitles('minicomics');
+// createComic({
+//   title: 'home learning',
+//   pages: [
+//     'http://res.cloudinary.com/spitchell/image/upload/v1587931282/minicomics/home%20learning/0-cover_lpppjg.jpg',
+//     'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/1-literacy_jjyrkf.jpg',
+//     'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/2-aeronautics_affsfr.jpg',
+//     'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/3-encryption_gor7aa.jpg',
+//     'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/4-art-and-design_eh8xym.jpg',
+//     'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/5-maths-1_uqnqes.jpg',
+//     'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/6-maths-2_gosi7v.jpg',
+//     'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/7-10000ad_umrqjs.jpg'
+//   ]
+// });
 
 // const createIssuePages = (comicsData) => {
 //   comicsData.forEach((issue) => {
