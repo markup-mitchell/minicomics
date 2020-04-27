@@ -1,13 +1,15 @@
+require('dotenv').config();
 const fs = require('fs-extra'); // for easy dir cp
 const config = require('./config');
 const pageHtml = require('./page-html-function');
 const addHomepage = require('./homepage');
 const cloudinary = require('cloudinary').v2;
 
+console.log(process.env.CLD_API_key);
 cloudinary.config({
-  cloud_name: 'spitchell',
-  api_key: '558763648963822',
-  api_secret: 'wO2rPjl0i9YQ82cGgf9ul-eMZjs'
+  cloud_name: process.env.CLD_NAME,
+  api_key: process.env.CLD_API_KEY,
+  api_secret: process.env.CLD_API_SECRET
 });
 
 getAllPageImages = (folder) => {
