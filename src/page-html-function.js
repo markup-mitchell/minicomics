@@ -1,6 +1,6 @@
 const config = require('./config');
 
-const pageHtml = (issue) => {
+const pageHtml = (pageData) => {
   return `
      <!DOCTYPE html>
      <html lang="en">
@@ -8,15 +8,12 @@ const pageHtml = (issue) => {
          <meta charset="UTF-8" />
          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
          <link rel="stylesheet" href="/public/assets/style.css" />
-         <title>${issue.title}</title>
+         <title>${pageData.title}</title>
        </head>
        <body>
         <main>
-         ${issue.frames
-           .map(
-             (frame) =>
-               `<img src="${config.dev.outDir}/${issue.title}/${frame}" loading="lazy" alt="">`
-           )
+         ${pageData.pages
+           .map((page) => `<img src="${page}" loading="lazy" alt="">`)
            .join('')}
         </main>
        </body>

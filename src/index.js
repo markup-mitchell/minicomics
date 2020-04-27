@@ -43,52 +43,60 @@ const getIssue = async (title) => {
       console.log(error);
     }
   );
-  //   console.log(allPages);
-  const pageData = allPages.resources.map((page) => {
-    return {
-      title: title,
-      url: page.url
-    };
-  });
-  console.log(pageData);
+  const imageUrls = allPages.resources.map((page) => page.url);
+  return { title: title, pages: imageUrls };
+  //   typing of return object?
 };
 
 getTitles('minicomics');
 getIssue('home learning');
 
-const createIssuePages = (comicsData) => {
-  comicsData.forEach((issue) => {
-    if (!fs.existsSync(issue.path)) {
-      fs.mkdirSync(issue.path);
-    }
-
-    fs.writeFile(`${issue.path}/index.html`, pageHtml(issue), (e) => {
-      if (e) throw e;
-      console.log(`${issue.path}/index.html was created successfully`);
-    });
+const createComic = (pageData) => {
+  // pageData is { title: string, url: [8 url as string] }
+  const issuePath = `${config.dev.outDir}/${pageData.title}`;
+  if (!fs.existsSync(issuePath)) {
+    fs.mkdirSync(issuePath);
+  }
+  fs.writeFile(`${issuePath}/index.html`, pageHtml(pageData), (e) => {
+    if (e) throw e;
+    console.log(`${issuePath}/index.html was created successfully`);
   });
 };
 
-const createComic = async (title) => {
-  let issue = {};
-  issue.path = `${config.dev.imageRepo}/${title}`;
-  issue.title = title;
-  //   issue.frames = fs.readdirSync(`${config.dev.pageDir}/${title}`);
-  issue.frames = await cloudinary.api.resources(
-    {
-      type: 'upload',
-      prefix: title
-    },
-    function (error, result) {
-      console.log(error);
-    }
-  );
-  const comicsData = comics.map((title) => createComic(title));
-  createIssuePages(comicsData);
-  addHomepage(comicsData);
+createComic({
+  title: 'home learning',
+  pages: [
+    'http://res.cloudinary.com/spitchell/image/upload/v1587931282/minicomics/home%20learning/0-cover_lpppjg.jpg',
+    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/1-literacy_jjyrkf.jpg',
+    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/2-aeronautics_affsfr.jpg',
+    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/3-encryption_gor7aa.jpg',
+    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/4-art-and-design_eh8xym.jpg',
+    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/5-maths-1_uqnqes.jpg',
+    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/6-maths-2_gosi7v.jpg',
+    'http://res.cloudinary.com/spitchell/image/upload/v1587931281/minicomics/home%20learning/7-10000ad_umrqjs.jpg'
+  ]
+});
 
-  return issue;
-};
+// const createIssuePages = (comicsData) => {
+//   comicsData.forEach((issue) => {
+//     if (!fs.existsSync(issue.path)) {
+//       fs.mkdirSync(issue.path);
+//     }
+
+//     fs.writeFile(`${issue.path}/index.html`, pageHtml(issue), (e) => {
+//       if (e) throw e;
+//       console.log(`${issue.path}/index.html was created successfully`);
+//     });
+//   });
+// };
+
+// const createComic = async (title) => {
+//   const comicsData = comics.map((title) => createComic(title));
+//   createIssuePages(comicsData);
+//   addHomepage(comicsData);
+
+//   return issue;
+// };
 
 // const comicsData = fs
 //   .readdirSync(config.dev.pageDir)
