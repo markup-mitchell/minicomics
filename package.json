@@ -1,7 +1,7 @@
 {
   "name": "discharge",
   "version": "0.0.1",
-  "description": "SSG learning project",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "test",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/spitchell/discharge.git"
+    "url": "git+https://github.com/spitchell/minicomics.git"
   },
   "author": "Mark Mitchell",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/spitchell/discharge/issues"
+    "url": "https://github.com/spitchell/minicomicse/issues"
   },
-  "homepage": "https://github.com/spitchell/discharge#readme",
+  "homepage": "https://github.com/spitchell/minicomics#readme",
   "devDependencies": {
     "cloudinary": "^1.21.0",
     "fs-extra": "^9.0.0"
