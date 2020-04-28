@@ -14,7 +14,7 @@
   "author": "Mark Mitchell",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/spitchell/minicomicse/issues"
+    "url": "https://github.com/spitchell/minicomics/issues"
   },
   "homepage": "https://github.com/spitchell/minicomics#readme",
   "devDependencies": {

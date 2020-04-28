@@ -1,6 +1,7 @@
 const config = {
   siteName: 'mitchcraft',
   authorName: 'Mark Mitchell',
+  description: 'minicomics displayed online',
   dev: {
     static: 'src/static',
     outDir: './public',
