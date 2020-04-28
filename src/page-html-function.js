@@ -14,7 +14,12 @@ const pageHtml = (pageData) => {
        <body>
         <main>
          ${pageData.pages
-           .map((page) => `<img src="${page}" loading="lazy" alt="">`)
+           .map(
+             (page) => `
+            <div class="img-wrapper">
+              <img src="${page}" loading="lazy" alt="">
+            </div>`
+           )
            .join('')}
         </main>
        </body>
