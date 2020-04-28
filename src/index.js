@@ -5,7 +5,6 @@ const pageHtml = require('./page-html-function');
 const addHomepage = require('./homepage');
 const cloudinary = require('cloudinary').v2;
 
-console.log(process.env.CLD_API_key);
 cloudinary.config({
   cloud_name: process.env.CLD_NAME,
   api_key: process.env.CLD_API_KEY,
@@ -35,7 +34,10 @@ const getIssue = (title, allImageData) => {
   const pagesData = [];
   allImageData.forEach((imageData) => {
     if (imageData.public_id.split('/')[1] === title) {
-      const transformUrl = imageData.url.replace('upload/', 'upload/w_425/');
+      const transformUrl = imageData.secure_url.replace(
+        'upload/',
+        'upload/w_425/'
+      );
       pagesData.push(transformUrl);
     }
   });
@@ -56,13 +58,11 @@ const createComic = (issue) => {
 
 const publishAll = async (folder) => {
   const allImageData = await getAllPageImages(folder); // {resources: [{}]}
-  // console.log(allImageData);
   const uniqueFolderPaths = new Set(
     allImageData.resources.map((imageObj) => imageObj.public_id.split('/')[1])
   ); // get subfolder from url - FRAGILE! relies on cloudinary structure
   const titles = Array.from(uniqueFolderPaths);
   const issues = titles.map((title) => getIssue(title, allImageData.resources));
-  console.log(issues);
   issues.forEach((issue) => createComic(issue));
   addHomepage(issues);
   fs.copy(`${config.dev.static}`, `${config.dev.outDir}`);
