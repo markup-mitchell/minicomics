@@ -134,7 +134,7 @@ img {
   .img-wrapper {
     display: flex;
     justify-content: center;
-    padding: 0;
+    padding: 4mm 4mm 0;
   }
   @page {
     margin: 4px;
