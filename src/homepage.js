@@ -26,13 +26,7 @@ const homepage = (pages) => `
                   .map(
                     (page) => `<li class="gallery__item">
                     <a class="gallery__image-link" href="./${page.title}"><img class="thumbnail" src="${page.pages[0]}" alt=""/></a>
-                    </li>
-                    <li class="gallery__item">
-                    <a class="gallery__image-link" href="./${page.title}"><img class="thumbnail" src="${page.pages[0]}" alt=""/></a>
-                    </li>
-                    <li class="gallery__item">
-                    <a class="gallery__image-link" href="./${page.title}"><img class="thumbnail" src="${page.pages[0]}" alt=""/></a>
-                    </li>`
+                  `
                   )
                   .join('')}
                   </ul>
