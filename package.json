@@ -1,7 +1,7 @@
 {
-  "name": "discharge",
+  "name": "spitchell",
   "version": "0.0.1",
-  "description": "",
+  "description": "minicomics for web and print",
   "main": "index.js",
   "scripts": {
     "test": "test",

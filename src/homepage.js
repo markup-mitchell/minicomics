@@ -16,9 +16,7 @@ const homepage = (pages) => `
     <body>
         <main>
             <header>
-                <h1>${config.siteName}</h1>
-                <p>—</p>
-                <p>by ${config.authorName}</p>
+                <!-- <h1>${config.siteName}</h1> -->
             </header>
 
             <ul class="gallery">
@@ -30,12 +28,9 @@ const homepage = (pages) => `
                   )
                   .join('')}
                   </ul>
-                  <a href="./" class="btn-link">back
-                  </a>
-
-            <footer>
+           <!-- <footer>
              
-            </footer>
+            </footer> -->
         </main>
     </body>
 </html>

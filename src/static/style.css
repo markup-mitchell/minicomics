@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  font-family: sans-serif;
 }
 
 :root {
@@ -38,53 +39,10 @@ img {
   display: inline-flex;
 }
 
-/* .btn-link {
-  border-image: url("data:image/svg + xml;utf8,
-    <svgxmlns:dc='http://purl.org/dc/elements/1.1/'xmlns:cc='http://creativecommons.org/ns#'xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'xmlns:svg='http://www.w3.org/2000/svg'xmlns='http://www.w3.org/2000/svg'id='svg5157'version='1.1'viewBox='0043.1391831.1534635'height='1.1534635mm'width='43.139183mm'><defsid='defs5151'/><metadataid='metadata5154'><rdf:RDF><cc:Workrdf:about=''><dc:format>image/svg + xml</dc:format><dc:typerdf:resource='http://purl.org/dc/dcmitype/StillImage'/><dc:title></dc:title></cc:Work></rdf:RDF></metadata><gtransform='translate(
-        -57.336799,
-        -97.553499
-      )'id='layer1'><pathid='path4574'd='m57.739187,
-    97.991119c1.498333,
-    0.06443.023368,
-    0.09984.500015,
-    0.08881.293788,
-    -0.012.549568,
-    0.05073.825348,
-    0.0931.296997,
-    0.0432.508611,
-    -0.33313.784973,
-    -0.186631.408724,
-    0.161662.663932,
-    0.129234.093208,
-    0.189771.44246,
-    0.06112.905339,
-    -0.0174.32535,
-    0.0051.359806,
-    0.0212.63702,
-    0.06713.961341,
-    0.06121.440485,
-    -0.0062.726672,
-    -0.174014.181592,
-    -0.120411.349274,
-    0.04972.564844,
-    0.02643.91174,
-    0.137941.141,
-    0.09452.293453,
-    -0.245493.437186,
-    -0.105181.259864,
-    0.154562.543276,
-    0.171133.801203,
-    8e-50.704786,
-    -0.09582.518057,
-    -0.02382.518057,
-    0.112480,
-    00,
-    0.01250,
-    0.01880,
-    0.0060,
-    0.01860,
-    0.0186'style='opacity:1;fill:#000;fill-opacity:1;stroke:#333333;stroke-width:0.79348546;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1'/></g></svg>");
-} */
+.btn-link {
+  font-size: 1.5rem;
+  padding: 1.5rem;
+}
 
 @media print {
   body {

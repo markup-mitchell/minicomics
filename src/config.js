@@ -1,5 +1,5 @@
 const config = {
-  siteName: 'mitchcraft',
+  siteName: 'spitchell',
   authorName: 'Mark Mitchell',
   description: 'minicomics displayed online',
   dev: {
