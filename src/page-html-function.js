@@ -21,7 +21,7 @@ const pageHtml = (pageData) => {
             </div>`
            )
            .join('')}
-           <a href="../index.html" class="btn-link">back
+           <a href="/" class="btn-link">back
                   </a>
         </main>
        </body>
