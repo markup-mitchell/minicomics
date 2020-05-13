@@ -22,13 +22,12 @@ img {
 
 .gallery {
   list-style: none;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   flex-wrap: wrap;
 }
 
 .gallery__item {
-  min-width: 50px;
-  max-width: 50%;
   align-self: center; /* 'stretch' default looks bad on ios */
   margin: 0.25rem;
 }
