@@ -14,7 +14,7 @@ const homepage = (pages) => `
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
-        <main>
+        <main class='p-4'>
             <header>
                 <!-- <h1>${config.siteName}</h1> -->
             </header>
