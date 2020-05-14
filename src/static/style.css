@@ -24,12 +24,16 @@ img {
   list-style: none;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  flex-wrap: wrap;
+  grid-gap: 1rem;
 }
 
 .gallery__item {
   align-self: center; /* 'stretch' default looks bad on ios */
+  display: flex;
   margin: 0.25rem;
+  height: 100%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .gallery__image-link {
