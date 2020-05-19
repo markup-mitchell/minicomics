@@ -34,7 +34,6 @@ img {
 }
 
 .gallery__item {
-  align-self: center; /* 'stretch' default looks bad on ios */
   max-width: max-content;
   display: flex;
   margin: 0.25rem;
@@ -45,6 +44,7 @@ img {
 
 .gallery__image-link {
   display: inline-flex;
+  align-self: center; /* 'stretch' default looks bad on ios */
 }
 
 .btn-link {
