@@ -14,6 +14,12 @@
     flex-direction: column;
     align-items: center;
   }
+
+  .issue-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 img {
@@ -29,6 +35,7 @@ img {
 
 .gallery__item {
   align-self: center; /* 'stretch' default looks bad on ios */
+  max-width: max-content;
   display: flex;
   margin: 0.25rem;
   height: 100%;
@@ -46,12 +53,15 @@ img {
 }
 
 @media print {
+  .no-print {
+    display: none;
+  }
   body {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  main {
+  .issue-layout {
     display: grid;
     grid-template-columns: repeat(4, 74.25mm);
     grid-template-rows: repeat(2, 105mm);
@@ -63,31 +73,31 @@ img {
     background: white;
   }
 
-  main > :first-child {
+  .issue-layout > :first-child {
     transform: rotate(180deg);
     padding: 0;
   }
-  main > :nth-child(2) {
+  .issue-layout > :nth-child(2) {
     grid-area: page_1;
   }
-  main > :nth-child(3) {
+  .issue-layout > :nth-child(3) {
     grid-area: page_2;
   }
-  main > :nth-child(4) {
+  .issue-layout > :nth-child(4) {
     grid-area: page_3;
   }
-  main > :nth-child(5) {
+  .issue-layout > :nth-child(5) {
     grid-area: page_4;
   }
-  main > :nth-child(6) {
+  .issue-layout > :nth-child(6) {
     grid-area: page_5;
     transform: rotate(180deg);
   }
-  main > :nth-child(7) {
+  .issue-layout > :nth-child(7) {
     grid-area: page_6;
     transform: rotate(180deg);
   }
-  main > :last-child {
+  .issue-layout > :last-child {
     transform: rotate(180deg);
     grid-area: back_cover;
   }
@@ -101,75 +111,6 @@ img {
     size: A4 landscape;
   }
 }
-
-/* .frame {
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  color: var(--draft);
-  outline: solid 1px var(--draft);
-  background-color: transparent;
-} */
-
-/* @media screen {
-  .no-print {
-    display: none;
-  }
-}
-
-@media (min-width: 640px) {
-  .frame {
-    height: 100vh;
-    width: auto;
-    justify-content: center;
-  }
-}
-
-@media (min-width: 768px) {
-  main {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 1fr;
-    grid-template-areas: '
-      .      front
-      page-1 page-2
-      page-3 page-4
-      page-5 page-6
-      page-7 back
-    ';
-  }
-  .no-print {
-    display: block;
-  }
-}
-
-@media print {
-  main {
-    grid-template-columns: repeat(4, 74.25mm);
-    grid-template-rows: repeat(2, 105mm);
-    justify-items: center;
-    align-items: center;
-    transform: rotate(90deg);
-  }
-  .frame {
-    width: 70mm;
-    height: 100mm;
-  }
-
-  .flip-v {
-    transform: rotate(180deg);
-  }
-  .no-print {
-    display: none;
-  }
-}
-
-@page {
-  margin: 0;
-  size: A4;
-} */
 
 .p4 {
   padding: 1rem;

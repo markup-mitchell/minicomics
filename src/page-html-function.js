@@ -13,6 +13,7 @@ const pageHtml = (pageData) => {
        </head>
        <body>
         <main>
+        <div class="issue-layout">
          ${pageData.pages
            .map(
              (page) => `
@@ -21,7 +22,8 @@ const pageHtml = (pageData) => {
             </div>`
            )
            .join('')}
-           <a href="/" class="btn-link">back
+           </div>
+           <a href="/" class="btn-link no-print">back
                   </a>
         </main>
        </body>
