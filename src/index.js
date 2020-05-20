@@ -61,7 +61,8 @@ const publishAll = async (folder) => {
   const uniqueFolderPaths = new Set(
     allImageData.resources.map((imageObj) => imageObj.public_id.split('/')[1])
   ); // get subfolder from url - FRAGILE! relies on cloudinary structure
-  const titles = Array.from(uniqueFolderPaths);
+  const titles = Array.from(uniqueFolderPaths).reverse();
+  console.log(`titles: ${titles}`);
   const issues = titles.map((title) => getIssue(title, allImageData.resources));
   issues.forEach((issue) => createComic(issue));
   addHomepage(issues);

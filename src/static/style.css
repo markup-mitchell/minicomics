@@ -47,7 +47,7 @@ img {
 }
 
 .gallery__image-link img {
-  align-self: center; /* 'stretch' default looks bad on ios */
+  align-self: center; /* flex item's 'stretch' default looks bad on ios */
 }
 
 .btn-link {
