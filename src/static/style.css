@@ -78,7 +78,6 @@ img {
 
   .issue-layout > :first-child {
     transform: rotate(180deg);
-    padding: 0;
   }
   .issue-layout > :nth-child(2) {
     grid-area: page_1;
