@@ -13,6 +13,7 @@
   /* html {
     background-color: var(--offwhite);
   } */
+
   main {
     display: flex;
     flex-direction: column;
@@ -56,7 +57,16 @@ img {
 .gallery__image-link:hover {
   transform: scale(1.05);
   transition: all 0.2s ease-in-out;
-  filter: sepia(0);
+  -webkit-filter: url(#duotone);
+  filter: url(#duotone);
+}
+
+.defs-only {
+  position: absolute;
+  height: 0;
+  width: 0;
+  overflow: none;
+  left: -100%;
 }
 
 .gallery__image-link img {
