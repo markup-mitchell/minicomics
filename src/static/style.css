@@ -6,9 +6,13 @@
 
 :root {
   --draft: #bbb;
+  --offwhite: ivory;
 }
 
 @media screen {
+  /* html {
+    background-color: var(--offwhite);
+  } */
   main {
     display: flex;
     flex-direction: column;
@@ -29,8 +33,9 @@ img {
 .gallery {
   list-style: none;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-gap: 1rem;
+  width: 100%;
 }
 
 .gallery__item {
@@ -43,7 +48,15 @@ img {
 }
 
 .gallery__image-link {
+  filter: sepia(0.5);
+  transition: all 0.2s ease-in-out;
   display: inline-flex;
+  background-color: white;
+}
+.gallery__image-link:hover {
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out;
+  filter: sepia(0);
 }
 
 .gallery__image-link img {

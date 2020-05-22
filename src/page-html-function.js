@@ -26,6 +26,7 @@ const pageHtml = (pageData) => {
            <a href="/" class="btn-link no-print">back
                   </a>
         </main>
+        
        </body>
      </html>
      `;
