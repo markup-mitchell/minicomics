@@ -3,6 +3,12 @@ const fs = require('fs');
 
 // pages is an array of objects with title and path properties
 
+function randomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const homepage = (pages) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -22,8 +28,15 @@ const homepage = (pages) => `
             <ul class="gallery">
                 ${pages
                   .map(
-                    (page) => `<li class="gallery__item">
-                    <a class="gallery__image-link" href="./${page.title}"><img src="${page.pages[0]}" alt=""/></a>
+                    (
+                      page
+                    ) => `<li class="gallery__item" style="transform:rotate(${randomInt(
+                      -5,
+                      5
+                    )}deg);">
+                    <a class="gallery__image-link" href="./${
+                      page.title
+                    }"><img src="${page.pages[0]}" alt=""/></a>
                   `
                   )
                   .join('')}
