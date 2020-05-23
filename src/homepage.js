@@ -23,7 +23,7 @@ const homepage = (pages) => `
                 ${pages
                   .map(
                     (page) => `<li class="gallery__item">
-                    <a class="gallery__image-link" href="./${page.title}"><img src="${page.pages[0]}" alt=""/>
+                    <a class="gallery__image-link" href="./${page.title}"><img src="${page.pages[0].url}" alt="${page.pages[0].alt}"/>
                     <img class="tap" 
                     src="./tap.svg" alt=""/>
                     </a>

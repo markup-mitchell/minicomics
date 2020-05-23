@@ -17,7 +17,8 @@ getAllPageImages = (folder) => {
     {
       type: 'upload',
       prefix: folder, // the name of the cloudinary folder,
-      max_results: 500
+      max_results: 500,
+      context: true
     },
     function (error, result) {
       console.log(error);
@@ -38,7 +39,17 @@ const getIssue = (title, allImageData) => {
         'upload/',
         'upload/w_425/'
       );
-      pagesData.push(transformUrl);
+
+      const imageParams = { url: transformUrl };
+
+      Object.assign(
+        imageParams,
+        !!imageData.context
+          ? { alt: imageData.context.custom.alt }
+          : { alt: 'Alt text pending - apologies.' }
+        // might fetch other metadata by this method, eg title. not now tho
+      );
+      pagesData.push(imageParams);
     }
   });
   return { title: title, pages: pagesData };
@@ -62,9 +73,9 @@ const publishAll = async (folder) => {
     allImageData.resources.map((imageObj) => imageObj.public_id.split('/')[1])
   ); // get subfolder from url - FRAGILE! relies on cloudinary structure
   const titles = Array.from(uniqueFolderPaths).reverse();
-  console.log(`titles: ${titles}`);
   const issues = titles.map((title) => getIssue(title, allImageData.resources));
   issues.forEach((issue) => createComic(issue));
+  console.log(allImageData[0]);
   addHomepage(issues);
   fs.copy(`${config.dev.static}`, `${config.dev.outDir}`);
 };

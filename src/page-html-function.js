@@ -1,5 +1,7 @@
 const config = require('./config');
 
+// pageData = {title: string, pages: [{url: string, alt: string}]}
+
 const pageHtml = (pageData) => {
   return `
      <!DOCTYPE html>
@@ -18,7 +20,7 @@ const pageHtml = (pageData) => {
            .map(
              (page) => `
             <div class="img-wrapper">
-              <img src="${page}" loading="lazy" alt="">
+              <img src="${page.url}" loading="lazy" alt='${page.alt}' >
             </div>`
            )
            .join('')}
