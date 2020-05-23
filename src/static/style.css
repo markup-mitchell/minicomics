@@ -59,7 +59,7 @@ img {
   margin: 0.25rem;
   height: 100%;
   border-right: solid thin #aaa;
-  box-shadow: 3px -4px 0 #eee, 30px 30px 50px #3336;
+  box-shadow: 10px 0 0 -5px #eee, 30px 30px 50px #3336;
 }
 
 .gallery__image-link {
