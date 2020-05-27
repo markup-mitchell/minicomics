@@ -75,7 +75,7 @@ const publishAll = async (folder) => {
   const titles = Array.from(uniqueFolderPaths).reverse();
   const issues = titles.map((title) => getIssue(title, allImageData.resources));
   issues.forEach((issue) => createComic(issue));
-  console.log(allImageData[0]);
+
   addHomepage(issues);
   fs.copy(`${config.dev.static}`, `${config.dev.outDir}`);
 };

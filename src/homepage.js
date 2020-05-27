@@ -1,9 +1,10 @@
 const config = require('./config');
 const fs = require('fs');
 
-// pages is an array of objects with title and path properties
+// issues = {title: string, pages: [{url: string, alt: sting},]}
+// there are 8 objects in each pages array
 
-const homepage = (pages) => `
+const homepage = (issues) => `
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,10 +21,10 @@ const homepage = (pages) => `
             </header>
 
             <ul class="gallery">
-                ${pages
+                ${issues
                   .map(
-                    (page) => `<li class="gallery__item">
-                    <a class="gallery__image-link" href="./${page.title}"><img src="${page.pages[0].url}" alt="${page.pages[0].alt}"/>
+                    (issue) => `<li class="gallery__item">
+                    <a class="gallery__image-link" href="./${issue.title}"><img src="${issue.pages[0].url}" alt="${issue.pages[0].alt}"/>
                     <img class="tap" 
                     src="./tap.svg" alt=""/>
                     </a>
@@ -40,8 +41,8 @@ const homepage = (pages) => `
 </html>
 `;
 
-const addHomepage = (pages) => {
-  fs.writeFile(`${config.dev.outDir}/index.html`, homepage(pages), (e) => {
+const addHomepage = (issues) => {
+  fs.writeFile(`${config.dev.outDir}/index.html`, homepage(issues), (e) => {
     if (e) throw e;
     console.log(`index.html was created successfully`);
   });
