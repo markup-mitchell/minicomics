@@ -8,7 +8,7 @@ const addManifest = () => {
   //  start_url could be the most recent strip
 
   fs.writeFile(
-    `${config.dev.static}/manifest.json`,
+    `${config.dev.outDir}/manifest.json`,
     jsonData,
     'utf8',
     function (err) {
@@ -16,7 +16,7 @@ const addManifest = () => {
         console.log('An error occured while writing JSON Object to File.');
         return console.log(err);
       }
-      console.log('JSON file has been saved.');
+      console.log('manifest.json was created successfully');
     }
   );
 };
