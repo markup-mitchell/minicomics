@@ -36,7 +36,8 @@ const homepage = (issues) => `
              
             </footer> -->
         </main>
-        
+        <!-- empty script tag (must include space) is to resolve a chrome bug that fires CSS transitions on page load --> 
+        <script> </script>  
     </body>
 </html>
 `;
