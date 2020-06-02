@@ -13,6 +13,7 @@ const homepage = (issues) => `
         <meta name="description" content="${config.description}" />
         <title>${config.siteName}</title>
         <link rel="stylesheet" href="style.css"/>
+        <link rel="manifest" href="manifest.json"/>
     </head>
     <body>
         <main class='p4'>

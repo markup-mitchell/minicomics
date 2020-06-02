@@ -17,6 +17,7 @@ const addIssue = (issueData) => {
          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
          <meta name="description" content="${config.description}" />
          <link rel="stylesheet" href="../style.css" />
+         <link rel="manifest" href="manifest.json"/>
          <title>${issueData.title}</title>
        </head>
        <body>
