@@ -11,13 +11,17 @@ const addIssue = (issueData) => {
 
   const issueHtml = `
      <!DOCTYPE html>
-     <html lang="en">
+     <html lang="en"> 
        <head>
          <meta charset="UTF-8" />
          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
          <meta name="description" content="${config.description}" />
          <link rel="stylesheet" href="../style.css" />
          <link rel="manifest" href="manifest.json"/>
+         <!-- ios support -->
+        <link rel="apple-touch-icon" href="/icons/icon-96x96.png"/>
+        <!-- could link to more for device to choose -->
+        <meta name="apple-mobile-web-app-status-bar" content="#333"/>
          <title>${issueData.title}</title>
        </head>
        <body>

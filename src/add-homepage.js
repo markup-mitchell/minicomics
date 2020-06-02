@@ -14,6 +14,11 @@ const homepage = (issues) => `
         <title>${config.siteName}</title>
         <link rel="stylesheet" href="style.css"/>
         <link rel="manifest" href="manifest.json"/>
+        <!-- ios support -->
+        <link rel="apple-touch-icon" href="/icons/icon-96x96.png"/>
+        <!-- could link to more for device to choose -->
+        <meta name="apple-mobile-web-app-status-bar" content="#333"/>
+
     </head>
     <body>
         <main class='p4'>
