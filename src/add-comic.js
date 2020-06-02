@@ -1,9 +1,15 @@
 const config = require('./config');
+const fs = require('fs');
 
 // pageData = {title: string, pages: [{url: string, alt: string}]}
 
-const createIssue = (pageData) => {
-  return `
+const addIssue = (issueData) => {
+  const issuePath = `${config.dev.outDir}/${issueData.title}`;
+  if (!fs.existsSync(issuePath)) {
+    fs.mkdirSync(issuePath);
+  }
+
+  const issueHtml = `
      <!DOCTYPE html>
      <html lang="en">
        <head>
@@ -11,12 +17,12 @@ const createIssue = (pageData) => {
          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
          <meta name="description" content="${config.description}" />
          <link rel="stylesheet" href="../style.css" />
-         <title>${pageData.title}</title>
+         <title>${issueData.title}</title>
        </head>
        <body>
         <main>
         <div class="issue-layout">
-         ${pageData.pages
+         ${issueData.pages
            .map(
              (page) => `
             <div class="img-wrapper">
@@ -32,6 +38,10 @@ const createIssue = (pageData) => {
        </body>
      </html>
      `;
+  fs.writeFile(`${issuePath}/index.html`, issueHtml, (e) => {
+    if (e) throw e;
+    console.log(`${issuePath}/index.html was created successfully`);
+  });
 };
 
-module.exports = createIssue;
+module.exports = addIssue;

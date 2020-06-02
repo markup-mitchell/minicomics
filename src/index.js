@@ -1,8 +1,8 @@
 require('dotenv').config();
 const fs = require('fs-extra'); // for easy dir cp
 const config = require('./config');
-const createPage = require('./comic-html');
-const addHomepage = require('./homepage-html');
+const addComic = require('./add-comic');
+const addHomepage = require('./add-homepage');
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
@@ -46,7 +46,6 @@ const initialize = async (folderName) => {
   data.issues = await data.titles.map((title) =>
     getIssue(title, data.resources)
   );
-  data.issues.forEach((issue) => createComic(issue));
 
   if ((await data.resources.length) > 400) {
     console.log(
@@ -54,6 +53,7 @@ const initialize = async (folderName) => {
     );
   }
 
+  data.issues.forEach((issue) => addComic(issue));
   addHomepage(data.issues);
 };
 
@@ -78,18 +78,6 @@ const getIssue = (title, resources) => {
     }
   });
   return { title: title, pages: pagesData };
-};
-
-const createComic = (issue) => {
-  // issue is { title: string, pages: [8x { url: string, alt: string }] }
-  const issuePath = `${config.dev.outDir}/${issue.title}`;
-  if (!fs.existsSync(issuePath)) {
-    fs.mkdirSync(issuePath);
-  }
-  fs.writeFile(`${issuePath}/index.html`, createPage(issue), (e) => {
-    if (e) throw e;
-    console.log(`${issuePath}/index.html was created successfully`);
-  });
 };
 
 module.exports = data;
