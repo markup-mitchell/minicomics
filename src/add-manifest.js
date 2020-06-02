@@ -1,0 +1,22 @@
+const config = require('./config');
+const fs = require('fs');
+
+const addManifest = () => {
+  var jsonData =
+    '{"name": "spitchell minicomics", "short_name": "spitchell", "start_url": "/index.html", "display": "standalone", "background_color": "#FFFFF3", "theme_color": "#333", "orientation": "portrait-primary", "icons": [{}]}';
+
+  fs.writeFile(
+    `${config.dev.static}/manifest.json`,
+    jsonData,
+    'utf8',
+    function (err) {
+      if (err) {
+        console.log('An error occured while writing JSON Object to File.');
+        return console.log(err);
+      }
+      console.log('JSON file has been saved.');
+    }
+  );
+};
+
+module.exports = addManifest;

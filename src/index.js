@@ -3,6 +3,7 @@ const fs = require('fs-extra'); // for easy dir cp
 const config = require('./config');
 const addComic = require('./add-comic');
 const addHomepage = require('./add-homepage');
+const addManifest = require('./add-manifest');
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
@@ -55,6 +56,7 @@ const initialize = async (folderName) => {
 
   data.issues.forEach((issue) => addComic(issue));
   addHomepage(data.issues);
+  addManifest();
 };
 
 initialize('minicomics');
