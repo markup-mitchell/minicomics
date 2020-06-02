@@ -5,6 +5,8 @@ const addManifest = () => {
   var jsonData =
     '{"name": "spitchell minicomics", "short_name": "spitchell", "start_url": "/index.html", "display": "standalone", "background_color": "#FFFFF3", "theme_color": "#333", "orientation": "portrait-primary", "icons": [{}]}';
 
+  //  start_url could be the most recent strip
+
   fs.writeFile(
     `${config.dev.static}/manifest.json`,
     jsonData,
