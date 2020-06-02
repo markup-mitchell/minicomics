@@ -1,8 +1,8 @@
 require('dotenv').config();
 const fs = require('fs-extra'); // for easy dir cp
 const config = require('./config');
-const pageHtml = require('./page-html-function');
-const addHomepage = require('./homepage');
+const createPage = require('./comic-html');
+const addHomepage = require('./homepage-html');
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
@@ -11,43 +11,68 @@ cloudinary.config({
   api_secret: process.env.CLD_API_SECRET
 });
 
-getAllPageImages = (folder) => {
-  const imageData = cloudinary.api.resources(
-    // fetch from  cloudinary
-    {
-      type: 'upload',
-      prefix: folder, // the name of the cloudinary folder,
-      max_results: 500,
-      context: true
-    },
-    function (error, result) {
-      console.log(error);
-    }
-  );
-  return imageData;
-};
-
 // make public directory
-
 if (!fs.existsSync(config.dev.outDir)) fs.mkdirSync(config.dev.outDir);
 
-const getIssue = (title, allImageData) => {
+// copy static assets to /public
+fs.copy(`${config.dev.static}`, `${config.dev.outDir}`);
+
+let data = {}; // need to be able to export this to manifest.json for PWA. how? no idea just yet
+
+const initialize = async (folderName) => {
+  // fetch all images from  cloudinary
+  Object.assign(
+    data,
+    await cloudinary.api.resources(
+      {
+        type: 'upload',
+        prefix: folderName,
+        max_results: 500, // the limit for a single call
+        context: true // allows alt text to be fetched
+      },
+      function (error, result) {
+        console.log(error);
+      }
+    )
+  );
+  // routes are created programmatically; we need to pull the folder names out of the fetched data
+  data.uniqueFolderPaths = await new Set(
+    data.resources.map((imageObj) => imageObj.public_id.split('/')[1])
+  );
+
+  // present issue numbers highest to lowest
+  data.titles = await Array.from(data.uniqueFolderPaths).reverse();
+
+  data.issues = await data.titles.map((title) =>
+    getIssue(title, data.resources)
+  );
+  data.issues.forEach((issue) => createComic(issue));
+
+  if ((await data.resources.length) > 400) {
+    console.log(
+      'WARNING: you may need to make multiple calls soon to bypass 500 result limit. https://github.com/spitchell/minicomics/projects/1#card-39360692'
+    );
+  }
+
+  addHomepage(data.issues);
+};
+
+initialize('minicomics');
+
+const getIssue = (title, resources) => {
   const pagesData = [];
-  allImageData.forEach((imageData) => {
-    if (imageData.public_id.split('/')[1] === title) {
-      const transformUrl = imageData.secure_url.replace(
-        'upload/',
-        'upload/w_425/'
-      );
-
-      const imageParams = { url: transformUrl };
-
+  resources.forEach((resource) => {
+    if (resource.public_id.split('/')[1] === title) {
+      // amend url to optimise image on fetch via cloudinary transformation
+      let imageParams = {
+        url: resource.secure_url.replace('upload/', 'upload/w_425/')
+      };
+      // add alt text specified at source or default message
       Object.assign(
         imageParams,
-        !!imageData.context
-          ? { alt: imageData.context.custom.alt }
+        !!resource.context
+          ? { alt: resource.context.custom.alt }
           : { alt: 'Alt text pending - apologies.' }
-        // might fetch other metadata by this method, eg title. not now tho
       );
       pagesData.push(imageParams);
     }
@@ -56,28 +81,15 @@ const getIssue = (title, allImageData) => {
 };
 
 const createComic = (issue) => {
-  // issue is { title: string, url: [8 url as string] }
+  // issue is { title: string, pages: [8x { url: string, alt: string }] }
   const issuePath = `${config.dev.outDir}/${issue.title}`;
   if (!fs.existsSync(issuePath)) {
     fs.mkdirSync(issuePath);
   }
-  fs.writeFile(`${issuePath}/index.html`, pageHtml(issue), (e) => {
+  fs.writeFile(`${issuePath}/index.html`, createPage(issue), (e) => {
     if (e) throw e;
     console.log(`${issuePath}/index.html was created successfully`);
   });
 };
 
-const publishAll = async (folder) => {
-  const allImageData = await getAllPageImages(folder); // {resources: [{}]}
-  const uniqueFolderPaths = new Set(
-    allImageData.resources.map((imageObj) => imageObj.public_id.split('/')[1])
-  ); // get subfolder from url - FRAGILE! relies on cloudinary structure
-  const titles = Array.from(uniqueFolderPaths).reverse();
-  const issues = titles.map((title) => getIssue(title, allImageData.resources));
-  issues.forEach((issue) => createComic(issue));
-
-  addHomepage(issues);
-  fs.copy(`${config.dev.static}`, `${config.dev.outDir}`);
-};
-
-publishAll('minicomics');
+module.exports = data;

@@ -2,7 +2,7 @@ const config = require('./config');
 
 // pageData = {title: string, pages: [{url: string, alt: string}]}
 
-const pageHtml = (pageData) => {
+const createIssue = (pageData) => {
   return `
      <!DOCTYPE html>
      <html lang="en">
@@ -34,4 +34,4 @@ const pageHtml = (pageData) => {
      `;
 };
 
-module.exports = pageHtml;
+module.exports = createIssue;
