@@ -43,7 +43,8 @@ const homepage = (issues) => `
             </footer> -->
         </main>
         <!-- empty script tag (must include space) is to resolve a chrome bug that fires CSS transitions on page load --> 
-        <script> </script>  
+        <script> </script>  <!-- needed with script below? -->
+        <script src="./app.js"></script>
     </body>
 </html>
 `;

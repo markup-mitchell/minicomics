@@ -39,7 +39,7 @@ const addIssue = (issueData) => {
            <a href="/" class="btn-link no-print">back
                   </a>
         </main>
-        
+        <script src="./app.js"></script>
        </body>
      </html>
      `;
