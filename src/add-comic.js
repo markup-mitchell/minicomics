@@ -22,6 +22,7 @@ const addIssue = (issueData) => {
         <link rel="apple-touch-icon" href="/icons/icon-96x96.png"/>
         <!-- could link to more for device to choose -->
         <meta name="apple-mobile-web-app-status-bar" content="#333"/>
+        <meta name="theme-color" content="#333"/>
          <title>${issueData.title}</title>
        </head>
        <body>

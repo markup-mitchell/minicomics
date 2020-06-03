@@ -56,7 +56,7 @@ const initialize = async (folderName) => {
 
   data.issues.forEach((issue) => addComic(issue));
   addHomepage(data.issues);
-  addManifest();
+  addManifest(data.resources);
 };
 
 initialize('minicomics');
