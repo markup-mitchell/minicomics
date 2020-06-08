@@ -57,7 +57,6 @@ img {
   max-width: max-content;
   display: flex;
   margin: 0.25rem;
-  height: 100%;
   border-right: solid thin #aaa;
   box-shadow: 10px 0 0 -5px #eee, 30px 30px 50px #3336;
 }
@@ -75,10 +74,6 @@ img {
   right: -6px;
   width: 30%;
   opacity: 0.5;
-}
-
-.gallery__image-link {
-  align-self: center; /* flex item's 'stretch' default looks bad on ios */
 }
 
 .btn-link {
