@@ -28,14 +28,17 @@ const homepage = (issues) => `
 
             <ul class="gallery">
                 ${issues
-                  .map(
-                    (issue) => `<li class="gallery__item">
+                  .map((issue) => {
+                    // hide issues named X* from homepage
+                    return issue.title[0] === 'X'
+                      ? null
+                      : `<li class="gallery__item">
                     <a class="gallery__image-link" href="./${issue.title}"><img src="${issue.pages[0].url}" alt="${issue.pages[0].alt}"/>
                     <img class="tap" 
                     src="./tap.svg" alt=""/>
                     </a>
-                  `
-                  )
+                  `;
+                  })
                   .join('')}
                   </ul>
            <!-- <footer>
