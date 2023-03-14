@@ -19,6 +19,7 @@ const homepage = (issues) => `
         <!-- could link to more for device to choose -->
         <meta name="apple-mobile-web-app-status-bar" content="#333"/>
         <meta name="theme-color" content="#333"/>
+        <a rel="me" href="https://indieweb.social/@spitchell">Mastodon</a>
     </head>
     <body>
         <main class='p4'>
